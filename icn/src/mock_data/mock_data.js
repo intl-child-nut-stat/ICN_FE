@@ -63,10 +63,9 @@ function getCommunities(country) {
 
 function getChildren(community, country) {
     let children = new Array(Math.floor(Math.random()*10+1))
-    let gender = getGender();
-    let DOB = faker.date.past();
     for( let i=0; i<children.length; i++){
-        let screenings = getScreenings(community, country, DOB);
+        let gender = getGender();
+        let screenings = getScreenings(community, country);
         children[i] = new Child(
             `${faker.name.firstName(gender)} ${faker.name.lastName()}`,
             getParentNames(),
@@ -86,8 +85,8 @@ function getScreenings(community, country) {
             faker.date.between('2017-01-01', '2019-06-30'),
             country,
             community,
-            Math.random()*(120) + 60,
-            Math.random()*(80) + 10,
+            Math.floor(Math.random()*(120) + 60),
+            Math.floor(Math.random()*(80) + 10),
         )
     }
     return screenings;
