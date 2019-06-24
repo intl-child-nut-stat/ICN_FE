@@ -14,14 +14,12 @@ export const attemptLogin = (creds) => dispatch => {
     dispatch({type: IS_LOGGING_IN})
     return axiosInstance().post("/user/login", creds)
         .then(res=> {
-            console.log(res)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("username", creds.username)
             dispatch({type: LOGIN_SUCCESS})
             return true
         })
         .catch(err => {
-            console.log(err)
             dispatch({type: LOGIN_ERROR, payload: err}) 
         })
 }
@@ -42,18 +40,16 @@ export const attemptSignUp = (creds, isAdmin) => dispatch => {
             isAdmin: isAdmin,
         }
     }
-    console.log(neededCreds)
     dispatch({type: IS_SIGNING_UP})
     return axiosInstance().post("/user/register", neededCreds) 
         .then(res => {
-            console.log(res)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("username", creds.username) 
-            dispatch({type: LOGIN_SUCCESS})
+            dispatch({type: SIGNUP_SUCCESS})
             return true
         })
         .catch(err => {
-            console.log(err)
-            dispatch({type: LOGIN_ERROR, payload: err}) 
+            console.log('error log', err)
+            dispatch({type: SIGNUP_ERROR, payload: err}) 
         })
 }

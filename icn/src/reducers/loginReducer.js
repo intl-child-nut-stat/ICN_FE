@@ -4,6 +4,7 @@ const initialState = {
     isLoggingIn: false,
     isLoggedIn: false,
     isSigningUp: false,
+    isSignedUp: false,
     errorMessage: null
 }
 
@@ -42,7 +43,7 @@ export default (state=initialState, {type, payload}) => {
             return {
                 ...state,
                 isSigningUp: false,
-                isLoggedIn: true
+                isSignedUp: true
             }
         case SIGNUP_ERROR:
             return {
