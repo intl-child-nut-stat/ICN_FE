@@ -124,5 +124,4 @@ function getParentContact() {
 }
 
 let fakeData = generateData();
-console.log(fakeData)
 export  {fakeData};
