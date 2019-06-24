@@ -5,12 +5,12 @@ export default function(){
     return axios.create({
         headers: {
             'Authorization': token},
-        baseURL: 'https://test-jeremiah.herokuapp.com/'
+        baseURL: 'https://child-nutrition.herokuapp.com'
     })
 }
 
 export const axiosInstance = () =>{
     return axios.create({
-        baseURL: 'https://test-jeremiah.herokuapp.com/'
+        baseURL: 'https://child-nutrition.herokuapp.com'
     })
 }
