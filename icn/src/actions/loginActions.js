@@ -3,7 +3,9 @@ import axiosWithAuth, {axiosInstance} from "../utils/axiosWithAuth"
 export const IS_LOGGING_IN="IS_LOGGING_IN"
 export const LOGIN_SUCCESS="LOGIN_SUCCESS"
 export const LOGIN_ERROR="LOGIN_ERROR"
-export const LOGGED_OUT="LOGGED_OUT"
+export const IS_LOGGING_OUT="IS_LOGGING_IN"
+export const LOGOUT_SUCCESS="LOGIN_SUCCESS"
+export const LOGOUT_ERROR="LOGIN_ERROR"
 
 export const IS_SIGNING_UP="IS_SIGNING_UP"
 export const SIGNUP_SUCCESS="SIGNUP_SUCCESS"
@@ -14,7 +16,6 @@ export const attemptLogin = (creds) => dispatch => {
     dispatch({type: IS_LOGGING_IN})
     return axiosInstance().post("/user/login", creds)
         .then(res=> {
-            console.log(res)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("username", creds.username)
             localStorage.setItem("isAdmin", res.data.isAdmin)
@@ -46,12 +47,21 @@ export const attemptSignUp = (creds, isAdmin) => dispatch => {
     dispatch({type: IS_SIGNING_UP})
     return axiosInstance().post("/user/register", neededCreds) 
         .then(res => {
-            console.log(res)
             dispatch({type: SIGNUP_SUCCESS})
             return true
         })
         .catch(err => {
-            console.log('error log', err)
             dispatch({type: SIGNUP_ERROR, payload: err}) 
+        })
+}
+
+export const logout = () => dispatch => {
+    dispatch({type: IS_LOGGING_OUT})
+    axiosInstance().post("/user/login")
+        .then(res=> {
+            dispatch({type: LOGOUT_SUCCESS})
+        })
+        .catch(err => {
+            dispatch({type: LOGOUT_ERROR, payload: err}) 
         })
 }

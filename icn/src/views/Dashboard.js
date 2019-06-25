@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Route, NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
 
+import {logout} from '../actions'
 import CountryView from './CountryView'
 import CommunityView from './CommunityView'
 import ChildrenView from './ChildrenView'
@@ -22,12 +23,16 @@ export class Dashboard extends Component {
         })
     }
     
+    logout = () => {
+        localStorage.clear()
+        this.props.logout()
+    }
     render() {
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
                 <NavLink to="/dashboard/countries">Country Display</NavLink>
-               
+                <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
                 <Route  path="/dashboard/countries" render={props => (
                     <CountryView
                         {...props} 
@@ -64,7 +69,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    
+    logout
 }
   
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)

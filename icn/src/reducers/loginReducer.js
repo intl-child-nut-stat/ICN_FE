@@ -1,8 +1,10 @@
-import {IS_LOGGING_IN, LOGIN_SUCCESS, LOGIN_ERROR, LOGGED_OUT, IS_SIGNING_UP, SIGNUP_SUCCESS, SIGNUP_ERROR} from '../actions'
+import {IS_LOGGING_IN, LOGIN_SUCCESS, LOGIN_ERROR, LOGGED_OUT, IS_SIGNING_UP, SIGNUP_SUCCESS, SIGNUP_ERROR, IS_LOGGING_OUT, LOGOUT_SUCCESS, LOGOUT_ERROR} from '../actions'
 
 const initialState = {
     isLoggingIn: false,
+    isLoggingOut: false,
     isLoggedIn: false,
+    isLoggedOut: false,
     isSigningUp: false,
     isSignedUp: false,
     errorMessage: null
@@ -28,11 +30,6 @@ export default (state=initialState, {type, payload}) => {
                 isLoggingIn: false,
                 errorMessage: payload
             }
-        case LOGGED_OUT:
-            return {
-                ...state,
-                isLoggedIn: false
-            }
         case IS_SIGNING_UP:
             return {
                 ...state,
@@ -48,6 +45,23 @@ export default (state=initialState, {type, payload}) => {
         case SIGNUP_ERROR:
             return {
                 ...state,
+                errorMessage: payload
+            }
+        case IS_LOGGING_OUT:
+            return {
+                ...state,
+                isLoggingOut: true,
+                errorMessage: null
+            }
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                isLoggedOut: true
+            }
+        case LOGOUT_ERROR:
+            return {
+                ...state,
+                isLoggingOut: false,
                 errorMessage: payload
             }
         default:
