@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {Route, Link, NavLink} from 'react-router-dom'
+import {Route, NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
-import {Breadcrumb, Alert} from 'antd'
 
 import CountryView from './CountryView'
 import CommunityView from './CommunityView'
