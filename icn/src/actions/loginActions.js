@@ -14,8 +14,11 @@ export const attemptLogin = (creds) => dispatch => {
     dispatch({type: IS_LOGGING_IN})
     return axiosInstance().post("/user/login", creds)
         .then(res=> {
+            console.log(res)
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("username", creds.username)
+            localStorage.setItem("isAdmin", res.data.isAdmin)
+            localStorage.setItem("country_id", res.data.countryId)
             dispatch({type: LOGIN_SUCCESS})
             return true
         })
@@ -43,8 +46,7 @@ export const attemptSignUp = (creds, isAdmin) => dispatch => {
     dispatch({type: IS_SIGNING_UP})
     return axiosInstance().post("/user/register", neededCreds) 
         .then(res => {
-            localStorage.setItem("token", res.data.token)
-            localStorage.setItem("username", creds.username) 
+            console.log(res)
             dispatch({type: SIGNUP_SUCCESS})
             return true
         })

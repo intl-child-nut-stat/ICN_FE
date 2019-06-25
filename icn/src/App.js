@@ -15,14 +15,15 @@ class App extends React.Component{
     componentDidMount() {
         if(localStorage.getItem("token"))
             this.props.history.push("/dashboard")
-        this.props.history.push("/home/login")
+        else
+            this.props.history.push("/home/login")
     }
     
     render(){
         return(
             <div className="app-container">
                 <Route path="/home" render={props => (<LoginHome {...props}/>)} />
-                <PrivateRoute path = "/dashboard" render={props => (<Dashboard {...props} />)} />
+                <PrivateRoute path = "/dashboard" component={Dashboard} />
             </div>
         )
     }

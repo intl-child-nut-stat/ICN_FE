@@ -15,7 +15,7 @@ class RegistrationForm extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getCountries()
+        this.props.getCountries(true)
     }
 
     handleSubmit = e => {
