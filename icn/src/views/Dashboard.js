@@ -14,14 +14,15 @@ export class Dashboard extends Component {
     componentDidMount() {
         let userName = localStorage.getItem("username")
         let isAdmin = localStorage.getItem("isAdmin")
+        let country_id = localStorage.getItem("country_id")
         this.setState({
             userName,
             isAdmin,
+            country_id
         })
     }
     
     render() {
-        const {location} = this.props.location
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
@@ -31,21 +32,23 @@ export class Dashboard extends Component {
                     <CountryView
                         {...props} 
                         isAdmin = {this.state.isAdmin}
+                        country_id = {this.state.country_id}
                     />
                 )} />
-                <Route exact path="/dashboard/:country" render={props => (
+                <Route exact path="/dashboard/country/:country" render={props => (
                     <CommunityView
                         {...props} 
                         isAdmin = {this.state.isAdmin}
+                        country_id = {this.state.country_id}
                     />
                 )} />
-                <Route exact path="/dashboard/:community" render={props => (
+                <Route exact path="/dashboard/community/:community" render={props => (
                     <ChildrenView
                         {...props} 
                         isAdmin = {this.state.isAdmin}
                     />
                 )} />
-                <Route exact path="/dashboard/:child" render={props => (
+                <Route exact path="/dashboard/children/:child" render={props => (
                     <ChildView
                         {...props} 
                         isAdmin = {this.state.isAdmin}

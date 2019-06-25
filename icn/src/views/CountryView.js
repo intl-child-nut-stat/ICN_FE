@@ -7,13 +7,11 @@ import CountryTable from '../components/CountryTable'
 class CountryView extends Component {
     
     componentDidMount() {
-        let country_id = localStorage.getItem("country_id")
-        this.props.getCountries(this.props.isAdmin, country_id)
+        this.props.getCountries(this.props.isAdmin, this.props.country_id)
     }
     
     confirmDelete = (record) => {
         message.error(`You deleted ${record.countries}`)
-        console.log(`You deleted ${record.countries} `)
     }
 
     cancelDelete = (record) => {
@@ -21,7 +19,6 @@ class CountryView extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <CountryTable 

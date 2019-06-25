@@ -8,7 +8,7 @@ function CountryTable(props) {
           title: 'Countries',
           dataIndex: 'countries',
           key: 'countries',
-          render: text => (<Link to={`/dashboard/${text}`}>{text}</Link>),
+          render: (text,record) => (<Link to={`/dashboard/country/${record.key}`}>{text}</Link>),
           width: `80%`
         },  
         {

@@ -15,7 +15,7 @@ class NormalLoginForm extends React.Component {
                 this.props.attemptLogin(values)
                     .then(res => {
                         if(res)
-                            this.props.history.push("/dashbaord")
+                            this.props.history.push("/dashboard")
                     })
             }
         });
