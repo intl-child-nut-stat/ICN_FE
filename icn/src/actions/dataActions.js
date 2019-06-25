@@ -51,7 +51,7 @@ export const getCommunities = (id) => dispatch => {
 
 export const addCountry = (country) => dispatch => {
     dispatch({type: ADDING_COUNTRY})
-    axiosWithAuth().post("/api/country", country)
+    axiosWithAuth().post("/api/country", {country})
         .then(res => {
             console.log(res)
             dispatch({type:ADD_COUNTRY_SUCCESS, payload: res.data})
@@ -64,7 +64,7 @@ export const addCountry = (country) => dispatch => {
 
 export const addCommunity = (community) => dispatch => {
     dispatch({type: ADDING_COMMUNITY})
-    axiosWithAuth().post("/api/community", community)
+    axiosWithAuth().post("/api/community", {community})
         .then(res => {
             console.log(res)
             dispatch({type:ADD_COMMUNITY_SUCCESS, payload: res.data})
