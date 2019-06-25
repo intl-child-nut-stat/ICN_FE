@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from "react-redux"
 
+
 //styling
 import './index.css';
 import 'antd/dist/antd.css';

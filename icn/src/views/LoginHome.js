@@ -1,8 +1,8 @@
 import React from 'react'
 import {Route, NavLink} from 'react-router-dom'
 
-import SignUp from '../components/SignUp'
-import Login from '../components/Login'
+import SignUp from './SignUp'
+import Login from './Login'
 
 function LoginHome(props) {
     return (
