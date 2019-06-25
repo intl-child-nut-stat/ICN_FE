@@ -35,6 +35,7 @@ export class Dashboard extends Component {
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
+                <NavLink to="/dashboard">Home</NavLink>
                 <NavLink to="/dashboard/countries">Country Display</NavLink>
                 <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
                
