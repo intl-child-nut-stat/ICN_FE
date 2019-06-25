@@ -2,24 +2,24 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {message, Button, Modal, Form, Input} from 'antd'
 
-import {getCommunities} from '../actions'
+import {getCommunities, addCommunity} from '../actions'
 import CommunityTable from '../components/CommunityTable'
 
 class CommunityView extends Component {
     state = {
         visible: false,
-        activeCountry: ''
+        activeCommunity: ''
     }
     componentDidMount() {
         this.props.getCommunities(this.props.match.params.country)
     }
     
     confirmDelete = (record) => {
-        message.error(`You deleted ${record.countries}`)
+        message.error(`You deleted ${record.communities}`)
     }
 
     cancelDelete = (record) => {
-        message.success(`You saved ${record.countries}`)
+        message.success(`You saved ${record.communities}`)
     }
 
     showModal = () => {
@@ -30,7 +30,7 @@ class CommunityView extends Component {
 
     handleOk = e => {
         e.preventDefault();
-        this.props.addCountry(this.state.activeCountry)
+        this.props.addCommunity(this.state.activeCommunity, this.props.match.params.country)
         this.setState({
             visible: false
         })
@@ -45,7 +45,7 @@ class CommunityView extends Component {
     handleChange = e => {
         e.preventDefault();
         this.setState({
-            activeCountry: e.target.value
+            activeCommunity: e.target.value
         })
     }
     render() {
@@ -68,7 +68,7 @@ class CommunityView extends Component {
                     >
                         <Form onSubmit={this.handleOk}>
                             <Form.Item label="Community Name:">
-                                <Input required={true} value={this.state.activeCountry} onChange={this.handleChange}/>
+                                <Input required={true} value={this.state.activeCommunity} onChange={this.handleChange}/>
                             </Form.Item>
                         </Form>
                     </Modal>
@@ -83,7 +83,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    getCommunities
+    getCommunities,
+    addCommunity
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommunityView)

@@ -57,7 +57,7 @@ export default (state=initialState, {type,payload}) => {
             return {
                 ...state,
                 isAdding: true,
-                countries: payload
+                countries: [...state.countries, payload]
             }
         case ADD_COUNTRY_ERROR:
             return {

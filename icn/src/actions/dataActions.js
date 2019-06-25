@@ -53,8 +53,8 @@ export const addCountry = (country) => dispatch => {
     dispatch({type: ADDING_COUNTRY})
     axiosWithAuth().post("/api/country", {country})
         .then(res => {
-            console.log(res)
-            dispatch({type:ADD_COUNTRY_SUCCESS, payload: res.data})
+            console.log('it worked', res)
+            dispatch({type:ADD_COUNTRY_SUCCESS, payload: country})
         })
         .catch(err => {
             console.log('stupid error', err)
@@ -62,9 +62,9 @@ export const addCountry = (country) => dispatch => {
         })
 }
 
-export const addCommunity = (community) => dispatch => {
+export const addCommunity = (community, country_id) => dispatch => {
     dispatch({type: ADDING_COMMUNITY})
-    axiosWithAuth().post("/api/community", {community})
+    axiosWithAuth().post("/api/community", {community, country_id})
         .then(res => {
             console.log(res)
             dispatch({type:ADD_COMMUNITY_SUCCESS, payload: res.data})
