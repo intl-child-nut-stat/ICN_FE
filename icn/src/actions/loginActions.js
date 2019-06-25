@@ -57,7 +57,7 @@ export const attemptSignUp = (creds, isAdmin) => dispatch => {
 
 export const logout = () => dispatch => {
     dispatch({type: IS_LOGGING_OUT})
-    axiosInstance().post("/user/login")
+    axiosInstance().get("/user/logout")
         .then(res=> {
             dispatch({type: LOGOUT_SUCCESS})
         })

@@ -8,7 +8,7 @@ function CommunityTable(props) {
           title: 'Communities',
           dataIndex: 'communities',
           key: 'communities',
-          render: text => (<Link to={`/dashboard/community/${text}`}>{text}</Link>),
+          render: (text,record) => (<Link to={`/dashboard/community/${record.key}`}>{text}</Link>),
           width: `80%`
         },  
         {

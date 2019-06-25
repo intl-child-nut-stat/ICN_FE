@@ -12,6 +12,10 @@ export const ADDING_COUNTRY = "ADDING_COUNTRY"
 export const ADD_COUNTRY_SUCCESS = "ADD_COUNTRY_SUCCESS"
 export const ADD_COUNTRY_ERROR = "ADD_COUNTRY_ERROR"
 
+export const ADDING_COMMUNITY = "ADDING_COMMUNITY"
+export const ADD_COMMUNITY_SUCCESS = "ADD_COMMUNITY_SUCCESS"
+export const ADD_COMMUNITY_ERROR = "ADD_COMMUNITY_ERROR"
+
 export const getCountries = (isAdmin, id) => dispatch => {
     dispatch({type: GETTING_COUNTRIES})
     if(isAdmin === "true" || isAdmin === true){
@@ -46,7 +50,6 @@ export const getCommunities = (id) => dispatch => {
     }
 
 export const addCountry = (country) => dispatch => {
-    console.log(country)
     dispatch({type: ADDING_COUNTRY})
     axiosWithAuth().post("/api/country", country)
         .then(res => {
@@ -56,5 +59,18 @@ export const addCountry = (country) => dispatch => {
         .catch(err => {
             console.log('stupid error', err)
             dispatch({type: ADD_COUNTRY_ERROR, payload: err})
+        })
+}
+
+export const addCommunity = (community) => dispatch => {
+    dispatch({type: ADDING_COMMUNITY})
+    axiosWithAuth().post("/api/community", community)
+        .then(res => {
+            console.log(res)
+            dispatch({type:ADD_COMMUNITY_SUCCESS, payload: res.data})
+        })
+        .catch(err => {
+            console.log('stupid error', err)
+            dispatch({type: ADD_COMMUNITY_ERROR, payload: err})
         })
 }
