@@ -53,12 +53,15 @@ class SignUp extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    countries: state.data.countries
+    countries: state.data.country
 })
 
 const mapDispatchToProps = {
     attemptSignUp, getData, attemptLogin
 }
 
+SignUp.defaultProps = {
+    countries: []
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

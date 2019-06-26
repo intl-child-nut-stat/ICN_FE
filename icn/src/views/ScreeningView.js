@@ -40,9 +40,7 @@ class DataView extends Component {
     }
     
     render() {
-        console.log(this.props.children)
-        let child = this.props.children.filter(child => child.id === Number(this.props.match.params.id))
-        console.log(child.name)
+        // let child = this.props.children.filter(child => child.id === Number(this.props.match.params.id))
         return (
             <div>
                 <ScreeningTable 
