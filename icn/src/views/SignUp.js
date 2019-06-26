@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 //styling
 import "./SignUp.scss"
 //components
-import {attemptSignUp, getCountries, attemptLogin} from '../actions'
+import {attemptSignUp, getData, attemptLogin} from '../actions'
 import SignUpForm from '../components/SignUpForm'
 
 class SignUp extends React.Component {
@@ -14,7 +14,7 @@ class SignUp extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getCountries("true")
+        this.props.getData(`/api/countrylist`, 'country')
     }
 
     handleSubmit = values => {
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    attemptSignUp, getCountries, attemptLogin
+    attemptSignUp, getData, attemptLogin
 }
 
 

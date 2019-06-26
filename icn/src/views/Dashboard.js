@@ -3,8 +3,9 @@ import {Route, NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
 
 
-import {logout, getCountries, getCommunities, getChildren, addCountry, addCommunity, addChild} from '../actions'
+import {logout, getData} from '../actions'
 import DataView from './DataView'
+import ScreeningView from './ScreeningView'
 import Map from '../components/Map'
 
 export class Dashboard extends Component {
@@ -15,9 +16,7 @@ export class Dashboard extends Component {
         let userName = localStorage.getItem("username")
         let isAdmin = localStorage.getItem("isAdmin") ==="true" 
         let country_id = localStorage.getItem("country_id")
-        this.props.getCountries(isAdmin, country_id)
-        this.props.getCommunities()
-        this.props.getChildren()
+        this.props.getData("/api/countrylist", "country")
         this.setState({
             userName,
             isAdmin,
@@ -34,8 +33,8 @@ export class Dashboard extends Component {
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
-                <NavLink to="/dashboard">Home</NavLink>
-                <NavLink to="/dashboard/countries">Country Display</NavLink>
+                <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/country/${localStorage.getItem("country_id")}`}>Home</NavLink>
+                {this.state.isAdmin && <NavLink to="/dashboard/countries">Country Display</NavLink>}
                 <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
                
                 {this.state.isAdmin && <Route exact path ="/dashboard" render ={props => (
@@ -46,40 +45,47 @@ export class Dashboard extends Component {
                 )} />}
                 <Route  path="/dashboard/countries" render={props => (
                     <DataView
-                        {...props} 
-                        data={this.props.countries}
+                        {...props}
+                        url={`/api/countrylist`} 
+                        postUrl={`/api/country`}
                         isAdmin = {this.state.isAdmin}
-                        addFunction = {this.props.addCountry}
                         name={`Country`}
                         item={`country`}
+                        param={false}
                     />
                 )} />
                 <Route exact path="/dashboard/country/:id" render={props => (
                     <DataView
                         {...props}
-                        data={this.props.communities}
+                        url={`/api/community/`}
                         isAdmin = {this.state.isAdmin}
-                        addFunction = {this.props.addCommunity}
                         name={`Community`}
                         item={`community`}
                         filter={'country_id'}
+                        param={false}
                     />
                 )} />
                 <Route exact path="/dashboard/community/:id" render={props => (
                     <DataView
                         {...props}
-                        data={this.props.children}
+                        url={`/api/children/`}
                         isAdmin = {this.state.isAdmin}
-                        addFunction={this.props.addChild}
                         name={`Child`}
-                        item={'name'}
+                        item={'children'}
+                        extra={`name`}
                         filter={`community_id`}
+                        param={true}
                     />
                 )} />
                 <Route exact path="/dashboard/children/:id" render={props => (
-                    <DataView
-                        {...props} 
+                    <ScreeningView
+                        {...props}
+                        url={`/api/screening/`} 
                         isAdmin = {this.state.isAdmin}
+                        name={`Screening`}
+                        item={`screening`}
+                        filter={`children_id`}
+                        param={true}
                     />
                 )} />
             </div>
@@ -88,19 +94,14 @@ export class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    countries: state.data.countries,
+    countries: state.data.country,
     communities: state.data.communities,
     children: state.data.children
 })
 
 const mapDispatchToProps = {
     logout,
-    getCountries,
-    getCommunities,
-    getChildren,
-    addCountry,
-    addCommunity,
-    addChild
+    getData,
 }
   
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)

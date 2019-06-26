@@ -7,11 +7,39 @@ function DataTable(props) {
     const columns = [
         {
           title: columnHeader,
-          dataIndex: 'name',
-          key: 'name',
-          render: (text,record) => (<Link to={`/dashboard/${props.item}/${record.key}`}>{text}</Link>),
-          width: `80%`
-        },  
+          dataIndex: 'key',
+          key: 'key',
+          render: text=>(text),
+          width: `15%`
+        },
+        {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+            render: text=>(text),
+            width: `15%`
+        }, 
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+            render: text=>(text),
+            width: `15%`
+        }, 
+        {
+            title: "Height",
+            dataIndex: 'height',
+            key: 'height',
+            render: text=>(text),
+            width: `15%`
+        },
+        {
+            title: "Weight",
+            dataIndex: 'weight',
+            key: 'weight',
+            render: text=>(text),
+            width: `15%`
+        },      
         {
           title: 'Manage',
           key: 'manage',
@@ -30,18 +58,15 @@ function DataTable(props) {
         },
       ];
 
-    let filteredData = props.data
-    if(props.item === "community")
-        filteredData = props.data.filter(item => item[props.filter] === Number(props.match))
-    let data = filteredData.map(item => {
-            let key = props.item
-            if(props.name==='Child')
-                key=props.extra
+    let data = props.data.map(item => {
             return {
                 key: item.id,
-                name: item[key]
+                date: item.date,
+                age: item.age,
+                height: item.height,
+                weight: item.weight
             }
-    }).sort((a,b) => a.name.localeCompare(b.name))
+    }).sort((a,b) => a.date.localeCompare(b.date))
     
 
     
