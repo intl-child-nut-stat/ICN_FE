@@ -1,4 +1,4 @@
-import axiosWithAuth, {axiosInstance} from "../utils/axiosWithAuth"
+import {axiosInstance} from "../utils/axiosWithAuth"
 
 export const IS_LOGGING_IN="IS_LOGGING_IN"
 export const LOGIN_SUCCESS="LOGIN_SUCCESS"
@@ -48,7 +48,6 @@ export const attemptSignUp = (creds, isAdmin) => dispatch => {
     return axiosInstance().post("/user/register", neededCreds) 
         .then(res => {
             dispatch({type: SIGNUP_SUCCESS})
-            return true
         })
         .catch(err => {
             dispatch({type: SIGNUP_ERROR, payload: err}) 

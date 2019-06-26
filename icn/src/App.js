@@ -13,9 +13,7 @@ import Dashboard from './views/Dashboard'
 
 class App extends React.Component{
     componentDidMount() {
-        if(localStorage.getItem("token"))
-            this.props.history.push("/dashboard")
-        else
+        if(!localStorage.getItem("token"))
             this.props.history.push("/home/login")
     }
     
@@ -31,7 +29,7 @@ class App extends React.Component{
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     return <Route {...rest} render = {props => 
-        localStorage.getItem("token") ? (<Component {...props}/>) : <Redirect to="/login"/>}
+        localStorage.getItem("token") ? (<Component {...props}/>) : <Redirect to="/home/login"/>}
     />
 }
 export default (withRouter(App));
