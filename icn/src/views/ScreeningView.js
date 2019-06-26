@@ -10,7 +10,7 @@ class DataView extends Component {
         activeItem: ''
     }
     componentDidMount() {
-        this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item)
+        this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item)                      
     }
 
     handleOk = e => {
@@ -40,6 +40,9 @@ class DataView extends Component {
     }
     
     render() {
+        console.log(this.props.children)
+        let child = this.props.children.filter(child => child.id === Number(this.props.match.params.id))
+        console.log(child.name)
         return (
             <div>
                 <ScreeningTable 
@@ -62,7 +65,8 @@ class DataView extends Component {
 
 
 const mapStateToProps = (state, ownProps) => ({
-    [ownProps.item]: state.data[ownProps.item]
+    [ownProps.item]: state.data[ownProps.item],
+    children: state.data.children
 })
 
 const mapDispatchToProps = {
