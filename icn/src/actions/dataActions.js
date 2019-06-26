@@ -90,9 +90,8 @@ export const addCommunity = (community, country_id) => dispatch => {
 }
 
 export const addChild = (child, community_id) => dispatch => {
-    console.log(child, community_id)
     dispatch({type: ADDING_CHILD})
-    axiosWithAuth().post("/api/children", {child, community_id})
+    axiosWithAuth().post("/api/children", {name: child, community_id})
         .then(res => {
             dispatch({type:ADD_CHILD_SUCCESS, payload: res.data})
         })
