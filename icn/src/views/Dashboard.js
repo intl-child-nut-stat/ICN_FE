@@ -47,7 +47,7 @@ export class Dashboard extends Component {
                     <DataView
                         {...props}
                         url={`/api/countrylist`} 
-                        postUrl={`/api/country`}
+                        postUrl={`/api/country/`}
                         isAdmin = {this.state.isAdmin}
                         name={`Country`}
                         item={`country`}

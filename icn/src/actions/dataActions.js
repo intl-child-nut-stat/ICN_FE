@@ -4,6 +4,10 @@ export const ADDING_DATA = "ADDING_DATA"
 export const ADD_DATA_SUCCESS = "ADD_DATA_SUCCESS"
 export const ADD_DATA_ERROR = "ADD_DATA_ERROR"
 
+export const DELETING_DATA = "DELETING_DATA"
+export const DELETE_DATA_SUCCESS = "DELETE_DATA_SUCCESS"
+export const DELETE_DATA_ERROR = "DELETE_DATA_ERROR"
+
 export const GETTING_DATA = "GETTING_DATA"
 export const GET_DATA_SUCCESS="GET_DATA_SUCCESS"
 export const GET_DATA_ERROR="GET_DATA_ERROR"
@@ -33,5 +37,17 @@ export const addData = (url, object, dataType) => dispatch => {
         .catch(err => {
             console.log(err)
             dispatch({type:ADD_DATA_ERROR})
+        })
+}
+
+export const deleteData = (url, id, dataType) => dispatch => {
+    console.log(url, id, dataType)
+    dispatch({type: DELETING_DATA})
+    axiosWithAuth().delete(`${url}${id}`)
+        .then(res => {
+            dispatch({type: DELETE_DATA_SUCCESS, payload: id, data: dataType})
+        })
+        .catch(err => {
+            console.log(err)
         })
 }

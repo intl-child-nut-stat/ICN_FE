@@ -1,5 +1,6 @@
 import {GETTING_DATA, GET_DATA_SUCCESS, GET_DATA_ERROR,
-    ADDING_DATA, ADD_DATA_SUCCESS, ADD_DATA_ERROR
+    ADDING_DATA, ADD_DATA_SUCCESS, ADD_DATA_ERROR,
+    DELETING_DATA, DELETE_DATA_SUCCESS, DELETE_DATA_ERROR
 } from '../actions'
 
 const initialState = {
@@ -43,6 +44,25 @@ export default (state=initialState, {type,payload, data}) => {
                 [data]: [...state[data], payload]
             }
         case ADD_DATA_ERROR:
+            return {
+                ...state,
+                isAdding: false,
+                errorMessage: payload
+            }
+        case DELETING_DATA:
+            return{
+                ...state,
+                isDeleting: true,
+                errorMessage: null
+            }
+        case DELETE_DATA_SUCCESS:
+            let deletedData = state[data].filter(item => item.id !==Number(payload))
+            return {
+                ...state,
+                isDeleting: false,
+                [data]: [...deletedData]
+            }
+        case DELETE_DATA_ERROR:
             return {
                 ...state,
                 isAdding: false,

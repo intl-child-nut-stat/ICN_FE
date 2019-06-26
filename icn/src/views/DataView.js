@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {message, Modal, Button, Form, Input} from 'antd';
 import DataTable from '../components/DataTable'
 import {connect} from 'react-redux'
-import {getData, addData} from '../actions'
+import {getData, addData, deleteData} from '../actions'
 
 class DataView extends Component {
     state = {
@@ -18,6 +18,7 @@ class DataView extends Component {
     
     confirmDelete = (record) => {
         message.error(`You deleted ${record.name}`)
+        this.props.deleteData(this.props.postUrl || this.props.url, record.key, this.props.item)
     }
 
     cancelDelete = (record) => {
@@ -130,7 +131,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
     getData,
-    addData
+    addData,
+    deleteData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)
