@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Table, Popconfirm} from 'antd'
 import moment from 'moment'
-import { setBMI } from '../actions';
 
 function DataTable(props) {
     const columnHeader = props.name
@@ -73,6 +72,7 @@ function DataTable(props) {
     let data = props.data.map((item) => {
             return {
                 id: item.id,
+                datePicker: moment(item.date),
                 date: moment.utc(item.date).format(`DD-MM-YYYY`),
                 age: item.age,
                 height: item.height,

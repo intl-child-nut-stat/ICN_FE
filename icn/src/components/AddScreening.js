@@ -21,6 +21,7 @@ class DrawerForm extends React.Component {
     for (let i=1; i<=18; i++){
         options.push(<Option key={i} value={i}>{i}</Option>)
     }
+    
     return (
       <div>
         <Button type="primary" onClick={() => this.props.showDrawer("add")}>
@@ -38,7 +39,7 @@ class DrawerForm extends React.Component {
                 <Form.Item label="Name">
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Please enter user name' }],
-                    initialValue: this.props.childName.name
+                    initialValue: this.props.childName.length>0 && this.props.childName[0].name
                   })(<Input />)}
                 </Form.Item>
               </Col>
@@ -89,7 +90,7 @@ class DrawerForm extends React.Component {
                   })(
                     <DatePicker
                         showToday
-                        format={'YYYY-MM-DD'}
+                        format={'DD-MM-YYYY'}
                       style={{ width: '100%' }}
                       getPopupContainer={trigger => trigger.parentNode}
                     />,
@@ -122,14 +123,14 @@ class DrawerForm extends React.Component {
   }
 }
 
-DrawerForm.defaultProps ={
-    childName: {
-        id: '',
-        name: ''
-    },
+DrawerForm.defaultProps = {
+    childName: [{name: ''}]
 }
 const AddScreening = Form.create({mapPropsToFields(props){
     return{
+        name: Form.createFormField({
+            value: props.childName.length>0 && props.childName[0].name
+        }),
         height: Form.createFormField({
             value: props.activeItem.height
         }),
@@ -140,7 +141,7 @@ const AddScreening = Form.create({mapPropsToFields(props){
             value: props.activeItem.age
         }),
         date:  Form.createFormField({
-            value: (props.activeItem.date !== '' ? props.activeItem.date : moment())
+            value: (props.activeItem.date !== '' ? moment.utc(props.activeItem.date) : moment())
         })
     }
 }})(DrawerForm);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {message} from 'antd'
-import {getData, addData, getChildName, updateData, deleteData, setBMI} from '../actions'
+import {getData, addData, updateData, deleteData} from '../actions'
 import ScreeningTable from '../components/ScreeningTable'
 import AddScreening from '../components/AddScreening'
 import moment from 'moment'
@@ -21,7 +21,7 @@ class DataView extends Component {
     }
     componentDidMount() {
         this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item) 
-        this.props.getChildName(this.props.match.params.id)  
+        this.props.getData('/api/children', "children")
     }
 
     confirmDelete = (record) => {
@@ -74,11 +74,12 @@ class DataView extends Component {
 
     prepareObject = (values) => {
         let object = {};
-        object.children_id = this.props.childName.id;
+        object.children_id = this.props.match.params.id;
         object.height = Number(values.height);
         object.weight = Number(values.weight);
         object.age = values.age
         object.date = moment(values.date._d).format('YYYY/MM/DD')
+        console.log(object.date)
         return object
     }
     
@@ -89,7 +90,7 @@ class DataView extends Component {
                 height: text.height,
                 weight: text.weight,
                 age: text.age,
-                date: moment(text.date),
+                date: text.datePicker,
             },
             activeKey: text.id
         }, () => this.showDrawer("edit"))
@@ -113,7 +114,7 @@ class DataView extends Component {
                 <div className="button/drawer">
                     <AddScreening 
                         match={this.props.match.params.id}
-                        childName={this.props.childName}
+                        childName={this.props.children.filter(child => child.id === Number(this.props.match.params.id))}
                         showDrawer={this.showDrawer}
                         handleOk={this.handleOk}
                         handleCancel={this.handleCancel}
@@ -122,9 +123,9 @@ class DataView extends Component {
                         activeItem={this.state.activeItem}
                     />
                 </div>
-                <BMIChart 
+                {/* <BMIChart 
                     data={this.props[this.props.item]}
-                />
+                /> */}
             </div>
         )
     }
@@ -134,13 +135,11 @@ class DataView extends Component {
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
     children: state.data.children,
-    childName: state.data.childName,
 })
 
 const mapDispatchToProps = {
     getData,
     addData,
-    getChildName,
     updateData,
     deleteData,
 }
