@@ -62,9 +62,9 @@ function DataTable(props) {
         },
       ];
 
-    let data = props.data.map(item => {
+    let data = props.data.map((item, index) => {
             return {
-                key: item.id,
+                key: ++index,
                 date: moment(item.date).format('YYYY/MM/DD'),
                 age: item.age,
                 height: item.height,

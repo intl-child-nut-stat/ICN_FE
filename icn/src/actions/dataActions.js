@@ -29,6 +29,7 @@ export const getData =(url, dataType) => dispatch => {
 }
 
 export const addData = (url, object, dataType) => dispatch => {
+    console.log(url, object, dataType)
     dispatch({type: ADDING_DATA})
     axiosWithAuth().post(`${url}`, object)
         .then(res => {
@@ -59,7 +60,7 @@ export const deleteData = (url, id, dataType) => dispatch => {
 }
 
 export const updateData = (url, id, object, dataType) => dispatch => {
-    console.log(url, id, dataType)
+    console.log(url, id, dataType, object)
     dispatch({type: UPDATING_DATA})
     axiosWithAuth().put(`${url}${id}`, object)
         .then(res => {

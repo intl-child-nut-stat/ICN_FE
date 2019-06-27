@@ -1,8 +1,7 @@
 import React from 'react'
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Icon } from 'antd';
 import moment from 'moment';
-
-
+import {getChildName} from '../actions'
 
 const { Option } = Select;
 
@@ -130,9 +129,6 @@ DrawerForm.defaultProps ={
         id: '',
         name: ''
     },
-    activeItem: {
-        date: moment()
-    }
 }
 const AddScreening = Form.create({mapPropsToFields(props){
     return{
@@ -146,7 +142,7 @@ const AddScreening = Form.create({mapPropsToFields(props){
             value: props.activeItem.age
         }),
         date:  Form.createFormField({
-            value: props.activeItem.date
+            value: (props.activeItem.date !== '' ? props.activeItem.date : moment())
         })
     }
 }})(DrawerForm);

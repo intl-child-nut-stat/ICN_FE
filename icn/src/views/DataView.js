@@ -81,6 +81,8 @@ class DataView extends Component {
                     name: this.state.activeItem,
                     community_id: this.props.match.params.id
                 }
+            default:
+                return {}
         }
     }
     
