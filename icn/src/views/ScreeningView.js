@@ -25,7 +25,7 @@ class DataView extends Component {
 
     confirmDelete = (record) => {
         message.error(`You deleted screening ${record.key}`)
-        this.props.deleteData(this.props.postUrl || this.props.url, record.key, this.props.item)
+        this.props.deleteData(this.props.postUrl || this.props.url, record.id, this.props.item)
     }
 
     cancelDelete = (record) => {
@@ -87,7 +87,7 @@ class DataView extends Component {
                 age: text.age,
                 date: moment(text.date),
             },
-            activeKey: text.key
+            activeKey: text.id
         }, () => this.showDrawer("edit"))
     }
 

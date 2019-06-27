@@ -65,12 +65,13 @@ function DataTable(props) {
     let data = props.data.map((item, index) => {
             return {
                 key: ++index,
-                date: moment(item.date).format('YYYY/MM/DD'),
+                id: item.id,
+                date: moment.utc(item.date).format(`DD-MM-YYYY`),
                 age: item.age,
                 height: item.height,
                 weight: item.weight
             }
-    }).sort((a,b) => a.date.localeCompare(b.date))
+    }).sort((a,b) => a.date.localeCompare(b.date) ? -1 : 1)
     
 
     

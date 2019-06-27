@@ -29,11 +29,9 @@ export const getData =(url, dataType) => dispatch => {
 }
 
 export const addData = (url, object, dataType) => dispatch => {
-    console.log(url, object, dataType)
     dispatch({type: ADDING_DATA})
     axiosWithAuth().post(`${url}`, object)
         .then(res => {
-            console.log(res)
             let output = res.data
             if(dataType==="country")
                 output=res.data[0]
@@ -47,7 +45,6 @@ export const addData = (url, object, dataType) => dispatch => {
 }
 
 export const deleteData = (url, id, dataType) => dispatch => {
-    console.log(url, id, dataType)
     dispatch({type: DELETING_DATA})
     axiosWithAuth().delete(`${url}${id}`)
         .then(res => {
@@ -60,11 +57,9 @@ export const deleteData = (url, id, dataType) => dispatch => {
 }
 
 export const updateData = (url, id, object, dataType) => dispatch => {
-    console.log(url, id, dataType, object)
     dispatch({type: UPDATING_DATA})
     axiosWithAuth().put(`${url}${id}`, object)
         .then(res => {
-            console.log(res)
             dispatch({type: UPDATE_DATA_SUCCESS, payload: id, data: dataType, newObj: {...object, id}})
         })
         .catch(err => {

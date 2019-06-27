@@ -24,7 +24,10 @@ class SignUp extends React.Component {
                 this.props.attemptLogin({username: values.username, password: values.password})
                     .then(res => {
                         if(res)
-                            this.props.history.push('/dashboard')
+                        if(localStorage.getItem("isAdmin") === "true")
+                        this.props.history.push("/dashboard")
+                    else 
+                        this.props.history.push(`/dashboard/country/${localStorage.getItem("country_id")}`)
                     })
                 
             })
