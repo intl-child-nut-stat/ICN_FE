@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {getData, addData, getChildName} from '../actions'
+import {message} from 'antd'
+import {getData, addData, getChildName, updateData, deleteData} from '../actions'
 import ScreeningTable from '../components/ScreeningTable'
 import AddScreening from '../components/AddScreening'
 import moment from 'moment'
@@ -22,9 +23,26 @@ class DataView extends Component {
         this.props.getChildName(this.props.match.params.id)                     
     }
 
+    confirmDelete = (record) => {
+        message.error(`You deleted screening ${record.key}`)
+        this.props.deleteData(this.props.postUrl || this.props.url, record.key, this.props.item)
+    }
+
+    cancelDelete = (record) => {
+        message.success(`You saved screening ${record.key}`)
+    }
     handleOk = values => {
         let object = this.prepareObject(values);
-        this.props.addData(this.props.postUrl || this.props.url, object, this.props.item)
+        if(this.state.actionType ==="add")
+            this.props.addData(this.props.postUrl || this.props.url, object, this.props.item)
+        else
+            this.props.updateData(this.props.postUrl || this.props.url, this.state.activeKey, object, this.props.item)
+        this.setState({
+            visible: false,
+            activeItem: {},
+            actionType: '',
+            activeKey: ''
+        })
         this.setState({
             visible: false
         })
@@ -33,6 +51,7 @@ class DataView extends Component {
     showDrawer = (actionType) => {
         this.setState({
           visible: true,
+          actionType
         });
     };
 
@@ -60,10 +79,14 @@ class DataView extends Component {
     }
     
     editItem = (text) => {
-        console.log(text)
         this.setState({
             ...this.state,
-            activeItem: text.name,
+            activeItem: {
+                height: text.height,
+                weight: text.weight,
+                age: text.age,
+                date: moment(text.date),
+            },
             activeKey: text.key
         }, () => this.showDrawer("edit"))
     }
@@ -91,6 +114,7 @@ class DataView extends Component {
                         handleCancel={this.handleCancel}
                         addScreening={this.props.addScreening}
                         visible={this.state.visible}
+                        activeItem={this.state.activeItem}
                     />
                 </div>
             </div>
@@ -109,6 +133,8 @@ const mapDispatchToProps = {
     getData,
     addData,
     getChildName,
+    updateData,
+    deleteData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)

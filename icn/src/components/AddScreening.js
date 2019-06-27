@@ -1,5 +1,6 @@
 import React from 'react'
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Icon } from 'antd';
+import moment from 'moment';
 
 
 
@@ -128,8 +129,26 @@ DrawerForm.defaultProps ={
     childName: {
         id: '',
         name: ''
+    },
+    activeItem: {
+        date: moment()
     }
 }
-const AddScreening = Form.create()(DrawerForm);
+const AddScreening = Form.create({mapPropsToFields(props){
+    return{
+        height: Form.createFormField({
+            value: props.activeItem.height
+        }),
+        weight: Form.createFormField({
+            value: props.activeItem.weight
+        }),
+        age: Form.createFormField({
+            value: props.activeItem.age
+        }),
+        date:  Form.createFormField({
+            value: props.activeItem.date
+        })
+    }
+}})(DrawerForm);
 
 export default AddScreening
