@@ -1,8 +1,6 @@
 import React from 'react'
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Icon } from 'antd';
 import moment from 'moment';
-import {getChildName} from '../actions'
-
 const { Option } = Select;
 
 class DrawerForm extends React.Component {
@@ -31,7 +29,7 @@ class DrawerForm extends React.Component {
         <Drawer
           title="Create a new screening"
           width={720}
-          onClose={this.onClose}
+          onClose={this.props.handleCancel}
           visible={this.props.visible}
         >
           <Form layout="vertical" hideRequiredMark onSubmit={this.addScreening}>

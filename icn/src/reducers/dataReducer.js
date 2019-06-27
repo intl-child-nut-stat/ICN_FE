@@ -2,7 +2,7 @@ import {GETTING_DATA, GET_DATA_SUCCESS, GET_DATA_ERROR,
     ADDING_DATA, ADD_DATA_SUCCESS, ADD_DATA_ERROR,
     DELETING_DATA, DELETE_DATA_SUCCESS, DELETE_DATA_ERROR,
     UPDATING_DATA, UPDATE_DATA_SUCCESS, UPDATE_DATA_ERROR,
-    SET_CHILD_NAME
+    SET_CHILD_NAME, SET_BMI
 } from '../actions'
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
     community: [],
     children: [],
     screening: [],
+    BMI: [],
     childName: '',
     isGetting: false,
     isAdding: false,

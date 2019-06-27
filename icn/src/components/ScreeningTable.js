@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Table, Popconfirm} from 'antd'
 import moment from 'moment'
+import { setBMI } from '../actions';
 
 function DataTable(props) {
     const columnHeader = props.name
@@ -40,11 +41,18 @@ function DataTable(props) {
             key: 'weight',
             render: text=>(text),
             width: `15%`
+        },
+        {
+            title: "BMI",
+            dataIndex: 'bmi',
+            key: 'bmi',
+            width: '10%',
+            render: text =>  (text)
         },      
         {
           title: 'Manage',
           key: 'manage',
-          width: `20%`,
+          width: `10%`,
           render: (text, record) => (
               <>
             <Link to="#" onClick={() => props.edit(text, "edit")} style={{paddingRight: "10px"}}>Edit</Link>
@@ -62,19 +70,16 @@ function DataTable(props) {
         },
       ];
 
-    let data = props.data.map((item, index) => {
+    let data = props.data.map((item) => {
             return {
-                key: ++index,
                 id: item.id,
                 date: moment.utc(item.date).format(`DD-MM-YYYY`),
                 age: item.age,
                 height: item.height,
-                weight: item.weight
+                weight: item.weight,
+                bmi: Math.round((item.weight/(Math.pow(item.height/100,2)))*100)/100
             }
-    }).sort((a,b) => a.date.localeCompare(b.date) ? -1 : 1)
-    
-
-    
+    }).sort((a,b) => a.date > b.date ? -1 : 1).map((item,index) => {return{...item, key: ++index}})
 
     return (
         <div>

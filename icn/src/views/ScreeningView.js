@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {message} from 'antd'
-import {getData, addData, getChildName, updateData, deleteData} from '../actions'
+import {getData, addData, getChildName, updateData, deleteData, setBMI} from '../actions'
 import ScreeningTable from '../components/ScreeningTable'
 import AddScreening from '../components/AddScreening'
 import moment from 'moment'
+import BMIChart from '../components/BMIChart'
 
 class DataView extends Component {
     state = {
@@ -20,7 +21,7 @@ class DataView extends Component {
     }
     componentDidMount() {
         this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item) 
-        this.props.getChildName(this.props.match.params.id)                     
+        this.props.getChildName(this.props.match.params.id)  
     }
 
     confirmDelete = (record) => {
@@ -57,7 +58,10 @@ class DataView extends Component {
 
     handleCancel = e => {
         this.setState({
-            visible: false
+            visible: false,
+            activeItem: {},
+            actionType: '',
+            activeKey: ''
         })
     }
 
@@ -104,6 +108,7 @@ class DataView extends Component {
                     match={this.props.match.params.id}
                     filter={this.props.filter}
                     edit={this.editItem}
+                    setBMI={this.props.setBMI}
                 />
                 <div className="button/drawer">
                     <AddScreening 
@@ -117,6 +122,9 @@ class DataView extends Component {
                         activeItem={this.state.activeItem}
                     />
                 </div>
+                <BMIChart 
+                    data={this.props[this.props.item]}
+                />
             </div>
         )
     }
@@ -126,7 +134,7 @@ class DataView extends Component {
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
     children: state.data.children,
-    childName: state.data.childName
+    childName: state.data.childName,
 })
 
 const mapDispatchToProps = {
@@ -134,7 +142,7 @@ const mapDispatchToProps = {
     addData,
     getChildName,
     updateData,
-    deleteData
+    deleteData,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)

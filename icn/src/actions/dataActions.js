@@ -17,6 +17,8 @@ export const GET_DATA_SUCCESS="GET_DATA_SUCCESS"
 export const GET_DATA_ERROR="GET_DATA_ERROR"
 
 export const SET_CHILD_NAME="SET_CHILD_NAME"
+
+
 export const getData =(url, dataType) => dispatch => {
     dispatch({type: GETTING_DATA})
     axiosWithAuth().get(`${url}`)
@@ -29,6 +31,7 @@ export const getData =(url, dataType) => dispatch => {
 }
 
 export const addData = (url, object, dataType) => dispatch => {
+    console.log(url, object, dataType)
     dispatch({type: ADDING_DATA})
     axiosWithAuth().post(`${url}`, object)
         .then(res => {
@@ -71,4 +74,3 @@ export const updateData = (url, id, object, dataType) => dispatch => {
 export const getChildName = (id) => dispatch => {
     dispatch({type: SET_CHILD_NAME, payload: id})
 }
-
