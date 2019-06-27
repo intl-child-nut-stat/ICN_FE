@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {Table, Popconfirm} from 'antd'
+import moment from 'moment'
 
 function DataTable(props) {
     const columnHeader = props.name
@@ -45,6 +46,8 @@ function DataTable(props) {
           key: 'manage',
           width: `20%`,
           render: (text, record) => (
+              <>
+            <Link to="#" onClick={() => props.edit(text, "edit")} style={{paddingRight: "10px"}}>Edit</Link>
             <Popconfirm
                 title={`Are you sure you want to delete this ${props.item}?`}
                 onConfirm={() => props.confirmDelete(record)}
@@ -54,6 +57,7 @@ function DataTable(props) {
             >
             <a href='#'>Delete</a>
             </Popconfirm>
+            </>
           ),
         },
       ];
@@ -61,7 +65,7 @@ function DataTable(props) {
     let data = props.data.map(item => {
             return {
                 key: item.id,
-                date: item.date,
+                date: moment(item.date).format('YYYY/MM/DD'),
                 age: item.age,
                 height: item.height,
                 weight: item.weight

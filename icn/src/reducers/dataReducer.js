@@ -1,18 +1,24 @@
 import {GETTING_DATA, GET_DATA_SUCCESS, GET_DATA_ERROR,
     ADDING_DATA, ADD_DATA_SUCCESS, ADD_DATA_ERROR,
-    DELETING_DATA, DELETE_DATA_SUCCESS, DELETE_DATA_ERROR
+    DELETING_DATA, DELETE_DATA_SUCCESS, DELETE_DATA_ERROR,
+    UPDATING_DATA, UPDATE_DATA_SUCCESS, UPDATE_DATA_ERROR,
+    SET_CHILD_NAME
 } from '../actions'
 
 const initialState = {
     country: [],
     community: [],
     children: [],
+    screening: [],
+    childName: '',
     isGetting: false,
     isAdding: false,
+    isDeleting: false,
+    isUpdating: false,
     errorMessage: null
 }
 
-export default (state=initialState, {type,payload, data}) => {
+export default (state=initialState, {type,payload, data, newObj}) => {
     switch(type){
         case GETTING_DATA:
             return{
@@ -65,8 +71,36 @@ export default (state=initialState, {type,payload, data}) => {
         case DELETE_DATA_ERROR:
             return {
                 ...state,
-                isAdding: false,
+                isDeleting: false,
                 errorMessage: payload
+            }
+        case UPDATING_DATA:
+            return{
+                ...state,
+                isUpdating: true,
+                errorMessage: null
+            }
+        case UPDATE_DATA_SUCCESS:
+            let sameItems = state[data].filter(item => item.id !==Number(payload))
+            if(newObj.country_id) newObj.country_id = Number(newObj.country_id)
+            if(newObj.community_id) newObj.community_id = Number(newObj.community_id)
+            let itemToUpdate = newObj
+            return {
+                ...state,
+                isUpdating: false,
+                [data]: [...sameItems, itemToUpdate]
+            }
+        case UPDATE_DATA_ERROR:
+            return {
+                ...state,
+                isUpdating: false,
+                errorMessage: payload
+            }
+        case SET_CHILD_NAME:
+            let childName = state.children.filter(child => child.id === Number(payload))[0]
+            return{
+                ...state,
+                childName
             }
         default:
             return state

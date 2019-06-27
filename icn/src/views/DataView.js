@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import {message, Modal, Button, Form, Input} from 'antd';
 import DataTable from '../components/DataTable'
 import {connect} from 'react-redux'
-import {getData, addData, deleteData} from '../actions'
+import {getData, addData, deleteData, updateData} from '../actions'
 
 class DataView extends Component {
     state = {
         visible: false,
-        activeItem: ''
+        activeItem: '',
+        actionType: '',
+        activeKey: ''
     }
     componentDidMount() {
         if(this.props.param)
@@ -25,24 +27,34 @@ class DataView extends Component {
         message.success(`You saved ${record.name}`)
     }
 
-    showModal = () => {
+    showModal = (actionType) => {
         this.setState({
-            visible: true
+            visible: true,
+            actionType
         })
     }
 
     handleOk = e => {
         e.preventDefault();
         let object = this.prepareObject();
-        this.props.addData(this.props.postUrl || this.props.url, object, this.props.item)
+        if(this.state.actionType ==="add")
+            this.props.addData(this.props.postUrl || this.props.url, object, this.props.item)
+        else
+            this.props.updateData(this.props.postUrl || this.props.url, this.state.activeKey, object, this.props.item)
         this.setState({
-            visible: false
+            visible: false,
+            activeItem: '',
+            actionType: '',
+            activeKey: ''
         })
     }
 
     handleCancel = e => {
         this.setState({
-            visible: false
+            visible: false,
+            activeItem: '',
+            actionType: '',
+            activeKey: ''
         })
     }
 
@@ -72,6 +84,14 @@ class DataView extends Component {
         }
     }
     
+    editItem = (text) => {
+        this.setState({
+            ...this.state,
+            activeItem: text.name,
+            activeKey: text.key
+        }, () => this.showModal("edit"))
+    }
+
     render() {
         return (
             <div>
@@ -84,9 +104,10 @@ class DataView extends Component {
                     extra={this.props.extra}
                     match={this.props.match.params.id}
                     filter={this.props.filter}
+                    edit={this.editItem}
                 />
                 {this.props.isAdmin && this.props.item==="country" && <div className="button/modal">
-                    <Button type="primary" onClick={this.showModal}>
+                    <Button type="primary" onClick={() => this.showModal("add")}>
                         Add {`${this.props.item}`}
                     </Button>
                     <Modal
@@ -103,7 +124,7 @@ class DataView extends Component {
                     </Modal>
                 </div>}
                 {this.props.item!=="country" && <div className="button/modal">
-                    <Button type="primary" onClick={this.showModal}>
+                    <Button type="primary" onClick={() => this.showModal("add")}>
                         Add {`${this.props.item}`}
                     </Button>
                     <Modal
@@ -132,7 +153,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
     getData,
     addData,
-    deleteData
+    deleteData,
+    updateData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)

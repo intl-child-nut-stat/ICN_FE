@@ -8,10 +8,15 @@ export const DELETING_DATA = "DELETING_DATA"
 export const DELETE_DATA_SUCCESS = "DELETE_DATA_SUCCESS"
 export const DELETE_DATA_ERROR = "DELETE_DATA_ERROR"
 
+export const UPDATING_DATA = "UPDATING_DATA"
+export const UPDATE_DATA_SUCCESS = "UPDATE_DATA_SUCCESS"
+export const UPDATE_DATA_ERROR = "UPDATE_DATA_ERROR"
+
 export const GETTING_DATA = "GETTING_DATA"
 export const GET_DATA_SUCCESS="GET_DATA_SUCCESS"
 export const GET_DATA_ERROR="GET_DATA_ERROR"
 
+export const SET_CHILD_NAME="SET_CHILD_NAME"
 export const getData =(url, dataType) => dispatch => {
     dispatch({type: GETTING_DATA})
     axiosWithAuth().get(`${url}`)
@@ -49,5 +54,25 @@ export const deleteData = (url, id, dataType) => dispatch => {
         })
         .catch(err => {
             console.log(err)
+            dispatch({type: DELETE_DATA_ERROR})
         })
 }
+
+export const updateData = (url, id, object, dataType) => dispatch => {
+    console.log(url, id, dataType)
+    dispatch({type: UPDATING_DATA})
+    axiosWithAuth().put(`${url}${id}`, object)
+        .then(res => {
+            console.log(res)
+            dispatch({type: UPDATE_DATA_SUCCESS, payload: id, data: dataType, newObj: {...object, id}})
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch({type: UPDATE_DATA_ERROR})
+        })
+}
+
+export const getChildName = (id) => dispatch => {
+    dispatch({type: SET_CHILD_NAME, payload: id})
+}
+

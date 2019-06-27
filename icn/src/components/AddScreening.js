@@ -2,105 +2,96 @@ import React from 'react'
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Icon } from 'antd';
 
 
+
 const { Option } = Select;
 
 class DrawerForm extends React.Component {
-  state = { visible: false };
 
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+  addScreening = (e) => {
+      e.preventDefault();
+        this.props.form.validateFieldsAndScroll((err, values) => {
+        if (!err){
+            this.props.handleOk(values)
+        }
+    })
+  }
 
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    let options = [];
+    for (let i=1; i<=18; i++){
+        options.push(<Option key={i} value={i}>{i}</Option>)
+    }
     return (
       <div>
-        <Button type="primary" onClick={this.showDrawer}>
+        <Button type="primary" onClick={() => this.props.showDrawer("add")}>
           <Icon type="plus" /> New screening
         </Button>
         <Drawer
           title="Create a new screening"
           width={720}
           onClose={this.onClose}
-          visible={this.state.visible}
+          visible={this.props.visible}
         >
-          <Form layout="vertical" hideRequiredMark>
+          <Form layout="vertical" hideRequiredMark onSubmit={this.addScreening}>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Name">
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: 'Please enter user name' }],
-                  })(<Input placeholder="Please enter user name" />)}
+                    initialValue: this.props.childName.name
+                  })(<Input />)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Height (cm)">
+                  {getFieldDecorator('height', {
+                    rules: [{required: true, message: 'Please enter a height (cm)' }],
+                  })(
+                    <Input placeholder="Enter a height(cm)" />
+                  )}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Url">
-                  {getFieldDecorator('url', {
-                    rules: [{ required: true, message: 'Please enter url' }],
+                <Form.Item label="Weight (kg)">
+                  {getFieldDecorator('weight', {
+                    rules: [{required: true, message: 'Please enter a weight (kg)' }],
                   })(
-                    <Input
-                      style={{ width: '100%' }}
-                      addonBefore="http://"
-                      addonAfter=".com"
-                      placeholder="Please enter url"
-                    />,
+                    <Input placeholder="Enter a weight (kg)" />
                   )}
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col span={12}>
-                <Form.Item label="Owner">
-                  {getFieldDecorator('owner', {
-                    rules: [{ required: true, message: 'Please select an owner' }],
+                <Form.Item label="Age">
+                  {getFieldDecorator('age', {
+                    rules: [{ required: true, message: 'Please enter the age' }],
                   })(
-                    <Select placeholder="Please select an owner">
-                      <Option value="xiao">Xiaoxiao Fu</Option>
-                      <Option value="mao">Maomao Zhou</Option>
+                    <Select 
+                        placeholder="Please choose the age"
+                        showSearch
+                        optionFilterProp="children"
+                        filterOption={(input, option) => {
+                            return option.props.value === Number(input)
+                        }}
+                    >
+                      {options}
                     </Select>,
                   )}
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Type">
-                  {getFieldDecorator('type', {
-                    rules: [{ required: true, message: 'Please choose the type' }],
+                <Form.Item label="Date">
+                  {getFieldDecorator('date', {
+                    rules: [{ required: true, message: 'Please choose the date' }],
                   })(
-                    <Select placeholder="Please choose the type">
-                      <Option value="private">Private</Option>
-                      <Option value="public">Public</Option>
-                    </Select>,
-                  )}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item label="Approver">
-                  {getFieldDecorator('approver', {
-                    rules: [{ required: true, message: 'Please choose the approver' }],
-                  })(
-                    <Select placeholder="Please choose the approver">
-                      <Option value="jack">Jack Ma</Option>
-                      <Option value="tom">Tom Liu</Option>
-                    </Select>,
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="DateTime">
-                  {getFieldDecorator('dateTime', {
-                    rules: [{ required: true, message: 'Please choose the dateTime' }],
-                  })(
-                    <DatePicker.RangePicker
+                    <DatePicker
+                        showToday
+                        format={'YYYY-MM-DD'}
                       style={{ width: '100%' }}
                       getPopupContainer={trigger => trigger.parentNode}
                     />,
@@ -108,24 +99,9 @@ class DrawerForm extends React.Component {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item label="Description">
-                  {getFieldDecorator('description', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'please enter url description',
-                      },
-                    ],
-                  })(<Input.TextArea rows={4} placeholder="please enter url description" />)}
-                </Form.Item>
-              </Col>
-            </Row>
           </Form>
           <div
             style={{
-              position: 'absolute',
               left: 0,
               bottom: 0,
               width: '100%',
@@ -135,10 +111,10 @@ class DrawerForm extends React.Component {
               textAlign: 'right',
             }}
           >
-            <Button onClick={this.onClose} style={{ marginRight: 8 }}>
+            <Button onClick={this.props.handleCancel} style={{ marginRight: 8 }}>
               Cancel
             </Button>
-            <Button onClick={this.onClose} type="primary">
+            <Button onClick={this.addScreening} type="primary">
               Submit
             </Button>
           </div>
@@ -148,6 +124,12 @@ class DrawerForm extends React.Component {
   }
 }
 
+DrawerForm.defaultProps ={
+    childName: {
+        id: '',
+        name: ''
+    }
+}
 const AddScreening = Form.create()(DrawerForm);
 
 export default AddScreening

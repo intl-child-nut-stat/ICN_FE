@@ -101,7 +101,7 @@ class NormalSignUpForm extends Component {
                                 style={{ width: 500 }}
                                 placeholder="Select a region"
                                 optionFilterProp="children"
-                                filterOption={(input, option) =>
+                                filterOption={(input, option) => 
                                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                 }
                             >

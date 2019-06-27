@@ -1,26 +1,40 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {getData, addData} from '../actions'
+import {getData, addData, getChildName} from '../actions'
 import ScreeningTable from '../components/ScreeningTable'
 import AddScreening from '../components/AddScreening'
+import moment from 'moment'
 
 class DataView extends Component {
     state = {
         visible: false,
-        activeItem: ''
+        activeItem: {
+            height: '',
+            weight: '',
+            age: '',
+            date: '',
+        },
+        activeKey: '',
+        actionType: ''
     }
     componentDidMount() {
-        this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item)                      
+        this.props.getData(`${this.props.url}${this.props.match.params.id}`, this.props.item) 
+        this.props.getChildName(this.props.match.params.id)                     
     }
 
-    handleOk = e => {
-        e.preventDefault();
-        let object = this.prepareObject();
+    handleOk = values => {
+        let object = this.prepareObject(values);
         this.props.addData(this.props.postUrl || this.props.url, object, this.props.item)
         this.setState({
             visible: false
         })
     }
+
+    showDrawer = (actionType) => {
+        this.setState({
+          visible: true,
+        });
+    };
 
     handleCancel = e => {
         this.setState({
@@ -35,12 +49,26 @@ class DataView extends Component {
         })
     }
 
-    prepareObject = () => {
-        
+    prepareObject = (values) => {
+        let object = {};
+        object.children_id = this.props.childName.id;
+        object.height = Number(values.height);
+        object.weight = Number(values.weight);
+        object.age = values.age
+        object.date = moment(values.date._d).format('YYYY/MM/DD')
+        return object
     }
     
+    editItem = (text) => {
+        console.log(text)
+        this.setState({
+            ...this.state,
+            activeItem: text.name,
+            activeKey: text.key
+        }, () => this.showDrawer("edit"))
+    }
+
     render() {
-        // let child = this.props.children.filter(child => child.id === Number(this.props.match.params.id))
         return (
             <div>
                 <ScreeningTable 
@@ -52,9 +80,18 @@ class DataView extends Component {
                     extra={this.props.extra}
                     match={this.props.match.params.id}
                     filter={this.props.filter}
+                    edit={this.editItem}
                 />
                 <div className="button/drawer">
-                    <AddScreening />
+                    <AddScreening 
+                        match={this.props.match.params.id}
+                        childName={this.props.childName}
+                        showDrawer={this.showDrawer}
+                        handleOk={this.handleOk}
+                        handleCancel={this.handleCancel}
+                        addScreening={this.props.addScreening}
+                        visible={this.state.visible}
+                    />
                 </div>
             </div>
         )
@@ -64,12 +101,14 @@ class DataView extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
-    children: state.data.children
+    children: state.data.children,
+    childName: state.data.childName
 })
 
 const mapDispatchToProps = {
     getData,
-    addData
+    addData,
+    getChildName,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)

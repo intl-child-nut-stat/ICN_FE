@@ -17,15 +17,18 @@ function DataTable(props) {
           key: 'manage',
           width: `20%`,
           render: (text, record) => (
-            <Popconfirm
-                title={`Are you sure you want to delete this ${props.item}?`}
-                onConfirm={() => props.confirmDelete(record)}
-                onCancel = {() => props.cancelDelete(record)}
-                okText="Yes"
-                cancelText="No"
-            >
-            <a href='#'>Delete</a>
-            </Popconfirm>
+            <>
+                <Link to="#" onClick={() => props.edit(text, "edit")} style={{paddingRight: "10px"}}>Edit</Link>
+                <Popconfirm
+                    title={`Are you sure you want to delete this ${props.item}?`}
+                    onConfirm={() => props.confirmDelete(record)}
+                    onCancel = {() => props.cancelDelete(record)}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                <a href='#'>Delete</a>
+                </Popconfirm>
+            </>
           ),
         },
       ];
