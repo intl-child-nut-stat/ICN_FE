@@ -59,7 +59,7 @@ class NormalSignUpForm extends Component {
         const adminOptions = [{label: `Yes`, value: 'Yes'}, {label: "No", value: `No`}]
         const countries = this.props.countries.map(country => <Option key={country.id}>{country.country}</Option>)
         return (
-            <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+            <Form {...formItemLayout} className="signup" onSubmit={this.handleSubmit}>
                 <Form.Item label="Username">
                     {getFieldDecorator('username', {
                         rules: [

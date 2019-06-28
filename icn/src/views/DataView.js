@@ -178,4 +178,5 @@ const DataDiv = styled.div`
     ul{
         margin-right: 50px;
     }
+    
 `

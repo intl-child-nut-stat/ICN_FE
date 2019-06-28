@@ -93,7 +93,7 @@ function DataTable(props) {
     
     return (
         <div>
-            <Table pagination={data.length>10} loading={props.gettingData} columns={columns} dataSource={data} pagination={true}/>
+            <Table pagination={data.length>10} loading={props.gettingData} columns={columns} dataSource={data}/>
         </div>
     )
 }
