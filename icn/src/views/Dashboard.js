@@ -7,7 +7,7 @@ import {logout, getData} from '../actions'
 import DataView from './DataView'
 import ScreeningView from './ScreeningView'
 import Map from '../components/Map'
-import Breadcrumbs from '../components/Breadcrumbs';
+
 
 export class Dashboard extends Component {
     state = {
@@ -37,7 +37,7 @@ export class Dashboard extends Component {
                 <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/country/${localStorage.getItem("country_id")}`}>Home</NavLink>
                 {this.state.isAdmin && <NavLink to="/dashboard/countries">Country Display</NavLink>}
                 <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
-               <Breadcrumbs />
+                
                 {this.state.isAdmin && <Route exact path ="/dashboard" render ={props => (
                     <Map 
                         {...props}

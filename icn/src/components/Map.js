@@ -63,7 +63,7 @@ class Map extends React.Component {
     clickedCountry = (countryClicked) => {
         let desiredCountry = this.props.countries.filter(country => country.country === countryClicked)
         if(desiredCountry.length)
-            this.props.history.push(`/dashboard/country/${desiredCountry[0].id}`)
+            this.props.history.push(`/dashboard/countries/community/${desiredCountry[0].id}`)
     }
     render(){
         return (

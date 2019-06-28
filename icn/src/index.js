@@ -6,7 +6,6 @@ import thunk from 'redux-thunk'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from "react-redux"
 
-
 //styling
 import './index.css';
 import 'antd/dist/antd.css';
@@ -20,7 +19,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <App />
+                <App />
         </Router>
     </Provider>,
     document.getElementById('root')
