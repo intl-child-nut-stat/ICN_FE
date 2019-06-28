@@ -107,6 +107,7 @@ class DataView extends Component {
                     match={this.props.match.params.id}
                     filter={this.props.filter}
                     edit={this.editItem}
+                    link={this.props.link}
                 />
                 {this.props.isAdmin && this.props.item==="country" && <div className="button/modal">
                     <Button type="primary" onClick={() => this.showModal("add")}>

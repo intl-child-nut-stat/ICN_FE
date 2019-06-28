@@ -9,7 +9,7 @@ function DataTable(props) {
           title: columnHeader,
           dataIndex: 'name',
           key: 'name',
-          render: (text,record) => (<Link to={`/dashboard/${props.item}/${record.key}`}>{text}</Link>),
+          render: (text,record) => (<Link to={`${props.link}/${record.key}`}>{text}</Link>),
           width: `80%`
         },  
         {

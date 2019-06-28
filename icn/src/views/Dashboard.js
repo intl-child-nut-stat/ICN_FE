@@ -7,6 +7,7 @@ import {logout, getData} from '../actions'
 import DataView from './DataView'
 import ScreeningView from './ScreeningView'
 import Map from '../components/Map'
+import Breadcrumbs from '../components/Breadcrumbs';
 
 export class Dashboard extends Component {
     state = {
@@ -29,21 +30,21 @@ export class Dashboard extends Component {
         localStorage.clear()
         this.props.logout()
     }
-    render() {
+    render() {        
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
                 <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/country/${localStorage.getItem("country_id")}`}>Home</NavLink>
                 {this.state.isAdmin && <NavLink to="/dashboard/countries">Country Display</NavLink>}
                 <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
-               
+               <Breadcrumbs />
                 {this.state.isAdmin && <Route exact path ="/dashboard" render ={props => (
                     <Map 
                         {...props}
                         countries={this.props.countries}
                     />
                 )} />}
-                <Route  path="/dashboard/countries" render={props => (
+                <Route  exact path="/dashboard/countries/" render={props => (
                     <DataView
                         {...props}
                         url={`/api/countrylist`} 
@@ -52,9 +53,10 @@ export class Dashboard extends Component {
                         name={`Country`}
                         item={`country`}
                         param={false}
+                        link={`/dashboard/countries/community`}
                     />
                 )} />
-                <Route exact path="/dashboard/country/:id" render={props => (
+                <Route exact path="/dashboard/countries/community/:id" render={props => (
                     <DataView
                         {...props}
                         url={`/api/community/`}
@@ -63,9 +65,10 @@ export class Dashboard extends Component {
                         item={`community`}
                         filter={'country_id'}
                         param={false}
+                        link={`/dashboard/countries/community/children`}
                     />
                 )} />
-                <Route exact path="/dashboard/community/:id" render={props => (
+                <Route exact path="/dashboard/countries/community/children/:id" render={props => (
                     <DataView
                         {...props}
                         url={`/api/children/`}
@@ -75,9 +78,10 @@ export class Dashboard extends Component {
                         extra={`name`}
                         filter={`community_id`}
                         param={true}
+                        link={`/dashboard/countries/community/children/screening`}
                     />
                 )} />
-                <Route exact path="/dashboard/children/:id" render={props => (
+                <Route exact path="/dashboard/countries/community/children/screening/:id" render={props => (
                     <ScreeningView
                         {...props}
                         url={`/api/screening/`} 
