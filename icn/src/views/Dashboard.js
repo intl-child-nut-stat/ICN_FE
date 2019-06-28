@@ -34,7 +34,7 @@ export class Dashboard extends Component {
         return (
             <div>
                 {`Welcome ${this.state.userName}`}
-                <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/country/${localStorage.getItem("country_id")}`}>Home</NavLink>
+                <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/countries/community/${localStorage.getItem("country_id")}`}>Home</NavLink>
                 {this.state.isAdmin && <NavLink to="/dashboard/countries">Country Display</NavLink>}
                 <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
                 

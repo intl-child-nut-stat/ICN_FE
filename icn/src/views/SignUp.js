@@ -27,7 +27,7 @@ class SignUp extends React.Component {
                         if(localStorage.getItem("isAdmin") === "true")
                         this.props.history.push("/dashboard")
                     else 
-                        this.props.history.push(`/dashboard/country/${localStorage.getItem("country_id")}`)
+                        this.props.history.push(`/dashboard/countries/community/${localStorage.getItem("country_id")}`)
                     })
                 
             })
