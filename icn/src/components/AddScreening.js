@@ -21,7 +21,7 @@ class DrawerForm extends React.Component {
     for (let i=1; i<=18; i++){
         options.push(<Option key={i} value={i}>{i}</Option>)
     }
-    
+
     return (
       <div>
         <Button type="primary" onClick={() => this.props.showDrawer("add")}>
@@ -126,7 +126,7 @@ class DrawerForm extends React.Component {
 DrawerForm.defaultProps = {
     childName: [{name: ''}]
 }
-const AddScreening = Form.create({mapPropsToFields(props){
+const AddScreening = Form.create({mapPropsToFields(props){                                                       
     return{
         name: Form.createFormField({
             value: props.childName.length>0 && props.childName[0].name
@@ -141,7 +141,7 @@ const AddScreening = Form.create({mapPropsToFields(props){
             value: props.activeItem.age
         }),
         date:  Form.createFormField({
-            value: (props.activeItem.date !== '' ? moment.utc(props.activeItem.date) : moment())
+            value: (props.activeItem.date !== '' ? moment(props.activeItem.date, `DDMMYYYY`) : moment())
         })
     }
 }})(DrawerForm);

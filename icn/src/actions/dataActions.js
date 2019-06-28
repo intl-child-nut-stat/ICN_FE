@@ -31,7 +31,6 @@ export const getData =(url, dataType) => dispatch => {
 }
 
 export const addData = (url, object, dataType) => dispatch => {
-    console.log(url, object, dataType)
     dispatch({type: ADDING_DATA})
     axiosWithAuth().post(`${url}`, object)
         .then(res => {
@@ -42,7 +41,6 @@ export const addData = (url, object, dataType) => dispatch => {
             
         })
         .catch(err => {
-            console.log(err)
             dispatch({type:ADD_DATA_ERROR})
         })
 }
@@ -54,7 +52,6 @@ export const deleteData = (url, id, dataType) => dispatch => {
             dispatch({type: DELETE_DATA_SUCCESS, payload: id, data: dataType})
         })
         .catch(err => {
-            console.log(err)
             dispatch({type: DELETE_DATA_ERROR})
         })
 }
@@ -66,7 +63,6 @@ export const updateData = (url, id, object, dataType) => dispatch => {
             dispatch({type: UPDATE_DATA_SUCCESS, payload: id, data: dataType, newObj: {...object, id}})
         })
         .catch(err => {
-            console.log(err)
             dispatch({type: UPDATE_DATA_ERROR})
         })
 }

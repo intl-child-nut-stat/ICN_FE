@@ -72,7 +72,7 @@ function DataTable(props) {
     let data = props.data.map((item) => {
             return {
                 id: item.id,
-                datePicker: moment(item.date),
+                datePicker: item.date,
                 date: moment.utc(item.date).format(`DD-MM-YYYY`),
                 age: item.age,
                 height: item.height,
@@ -80,7 +80,7 @@ function DataTable(props) {
                 bmi: Math.round((item.weight/(Math.pow(item.height/100,2)))*100)/100
             }
     }).sort((a,b) => a.date > b.date ? -1 : 1).map((item,index) => {return{...item, key: ++index}})
-
+    
     return (
         <div>
             <Table columns={columns} dataSource={data} pagination={true}/>

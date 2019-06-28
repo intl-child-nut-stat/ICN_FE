@@ -59,7 +59,12 @@ class DataView extends Component {
     handleCancel = e => {
         this.setState({
             visible: false,
-            activeItem: {},
+            activeItem: {
+                height: '',
+                weight: '',
+                age: '',
+                date: '',
+            },
             actionType: '',
             activeKey: ''
         })
@@ -79,7 +84,6 @@ class DataView extends Component {
         object.weight = Number(values.weight);
         object.age = values.age
         object.date = moment(values.date._d).format('YYYY/MM/DD')
-        console.log(object.date)
         return object
     }
     
@@ -90,7 +94,7 @@ class DataView extends Component {
                 height: text.height,
                 weight: text.weight,
                 age: text.age,
-                date: text.datePicker,
+                date: moment.utc(text.datePicker).format('DD-MM-YYYY'),
             },
             activeKey: text.id
         }, () => this.showDrawer("edit"))
