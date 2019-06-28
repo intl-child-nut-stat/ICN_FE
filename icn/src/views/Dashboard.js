@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Route, NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
 
-
+import {Button, Modal, Form, Input} from 'antd'
 import {logout, getData} from '../actions'
 import DataView from './DataView'
 import ScreeningView from './ScreeningView'
@@ -36,9 +36,9 @@ export class Dashboard extends Component {
                 <NavDiv>
                     <div>
                     {`Welcome ${this.state.userName}`}
-                    <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/countries/community/${localStorage.getItem("country_id")}`}>Home</NavLink>
-                    {this.state.isAdmin && <NavLink to="/dashboard/countries">List Countries</NavLink>}
-                    <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
+                    <NavLink exact to={this.state.isAdmin ? "/dashboard" : `/dashboard/countries/community/${localStorage.getItem("country_id")}`} activeStyle={{textDecoration: `underline`}}>Home</NavLink>
+                    {this.state.isAdmin && <NavLink exact to="/dashboard/countries" activeStyle={{textDecoration: `underline`}}>List Countries</NavLink>}
+                    <NavLink to="/Home/login" onClick={this.logout} activeStyle={{textDecoration: `underline`}}>Log out</NavLink>
                     </div>
                 </NavDiv>
                 {this.state.isAdmin && <Route exact path ="/dashboard" render ={props => (
@@ -49,7 +49,7 @@ export class Dashboard extends Component {
                     />
                     </MapDiv>
                 )} />}
-
+                
                 <Route  exact path="/dashboard/countries/" render={props => (
                     <DataView
                         {...props}
