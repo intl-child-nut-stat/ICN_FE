@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {Route, NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
 
-import {Button, Modal, Form, Input} from 'antd'
 import {logout, getData} from '../actions'
 import DataView from './DataView'
 import ScreeningView from './ScreeningView'

@@ -20,7 +20,7 @@ class Map extends React.Component {
         let countryCodes = this.props.countries.map(country => getCountryCode(country.country))
         // Create map instance
         var chart = am4core.create("chartdiv", am4maps.MapChart);
-
+        chart.tooltip.fontSize="24px"
         // Set map definition
         chart.geodata = am4geodata_worldHigh;
 
@@ -68,7 +68,7 @@ class Map extends React.Component {
     }
     render(){
         return (
-            <div id="chartdiv" style={{width:'100%', height: '500px'}}></div>
+            <div id="chartdiv" style={{width:'100%', height: '700px'}}></div>
         )
     }
 }

@@ -29,13 +29,17 @@ class BMIChart extends React.Component {
         // Create axes
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         dateAxis.title.text="Screening Date"
+        dateAxis.title.fontSize="20px"
         dateAxis.dateFormats.setKey('day','dd-MM-yyyy')
+        dateAxis.fontSize="16px"
         dateAxis.periodChangeDateFormats.setKey("month", "[bold]MMM")
         dateAxis.renderer.axisFills.template.disabled = false;
         dateAxis.renderer.axisFills.template.fill = am4core.color("#D2D68D");
         dateAxis.renderer.axisFills.template.fillOpacity = 0.2;
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.title.text = "BMI"
+        valueAxis.fontSize="16px"
+        valueAxis.title.fontSize="20px"
         // Create series
         let series = chart.series.push(new am4charts.LineSeries());
         series.dataFields.valueY = "value";
