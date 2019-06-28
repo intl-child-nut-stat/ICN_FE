@@ -3,7 +3,7 @@ import {message, Modal, Button, Form, Input} from 'antd';
 import DataTable from '../components/DataTable'
 import {connect} from 'react-redux'
 import {getData, addData, deleteData, updateData} from '../actions'
-
+import styled from 'styled-components'
 class DataView extends Component {
     state = {
         visible: false,
@@ -96,7 +96,7 @@ class DataView extends Component {
 
     render() {
         return (
-            <div>
+            <DataDiv>
                 <DataTable 
                     data={this.props[this.props.item]}
                     confirmDelete = {this.confirmDelete}
@@ -108,6 +108,7 @@ class DataView extends Component {
                     filter={this.props.filter}
                     edit={this.editItem}
                     link={this.props.link}
+                    gettingData = {this.props.gettingData}
                 />
                 {this.props.isAdmin && this.props.item==="country" && <div className="button/modal">
                     <Button type="primary" onClick={() => this.showModal("add")}>
@@ -143,14 +144,15 @@ class DataView extends Component {
                         </Form>
                     </Modal>
                 </div>}
-            </div>
+            </DataDiv>
         )
     }
 }
 
 
 const mapStateToProps = (state, ownProps) => ({
-    [ownProps.item]: state.data[ownProps.item]
+    [ownProps.item]: state.data[ownProps.item],
+    gettingData: state.data.isGetting
 })
 
 const mapDispatchToProps = {
@@ -161,3 +163,19 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)
+
+
+const DataDiv = styled.div`
+    width: 1000px;
+    margin: 0 auto;
+    background: white;
+    text-align: center;
+
+    button{
+        margin: 20px 0;
+    }
+
+    ul{
+        margin-right: 50px;
+    }
+`

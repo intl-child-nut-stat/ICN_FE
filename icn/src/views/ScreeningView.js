@@ -6,7 +6,7 @@ import ScreeningTable from '../components/ScreeningTable'
 import AddScreening from '../components/AddScreening'
 import moment from 'moment'
 import BMIChart from '../components/BMIChart'
-
+import styled from 'styled-components'
 class DataView extends Component {
     state = {
         visible: false,
@@ -107,7 +107,7 @@ class DataView extends Component {
 
     render() {
         return (
-            <div>
+            <DataDiv>
                 <ScreeningTable 
                     data={this.props[this.props.item]}
                     confirmDelete = {this.confirmDelete}
@@ -119,6 +119,7 @@ class DataView extends Component {
                     filter={this.props.filter}
                     edit={this.editItem}
                     setBMI={this.props.setBMI}
+                    gettingData={this.props.gettingData}
                 />
                 <div className="button/drawer">
                     <AddScreening 
@@ -136,7 +137,7 @@ class DataView extends Component {
                     data={this.props[this.props.item]}
                     childName={this.props.children.filter(child => child.id === Number(this.props.match.params.id))}
                 /> : <div>Add more data to get a BMI chart.</div>}
-            </div>
+            </DataDiv>
         )
     }
 }
@@ -145,6 +146,7 @@ class DataView extends Component {
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
     children: state.data.children,
+    gettingData: state.data.isGetting
 })
 
 const mapDispatchToProps = {
@@ -155,3 +157,19 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataView)
+
+
+const DataDiv = styled.div`
+    width: 1000px;
+    margin: 0 auto;
+    background: white;
+    text-align: center;
+
+    button{
+        margin: 20px auto;
+    }
+
+    ul{
+        margin-right: 50px;
+    }
+`

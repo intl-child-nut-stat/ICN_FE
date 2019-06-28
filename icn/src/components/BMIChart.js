@@ -41,7 +41,7 @@ class BMIChart extends React.Component {
         series.dataFields.valueY = "value";
         series.dataFields.dateX = "date";
         series.fill = am4core.color("#ffffff")
-        series.name = this.props.childName && `${this.props.childName[0].name}'s BMI`
+        series.name = this.props.childName.length>0 && `${this.props.childName[0].name}'s BMI`
         series.strokeWidth = 5
         series.stroke = am4core.color("black")
         series.tooltipText = "{date}: [bold]{valueY}"
@@ -58,9 +58,8 @@ class BMIChart extends React.Component {
         chart.cursor.snapToSeries = series;
         chart.cursor.xAxis = dateAxis;
 
-        chart.scrollbarX = new am4core.Scrollbar();
         chart.legend = new am4charts.Legend();
-        chart.legend.position = "left"
+        chart.legend.position = "top"
     }
     
     

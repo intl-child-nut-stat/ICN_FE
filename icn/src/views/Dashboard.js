@@ -7,7 +7,7 @@ import {logout, getData} from '../actions'
 import DataView from './DataView'
 import ScreeningView from './ScreeningView'
 import Map from '../components/Map'
-
+import styled from 'styled-components'
 
 export class Dashboard extends Component {
     state = {
@@ -33,17 +33,23 @@ export class Dashboard extends Component {
     render() {        
         return (
             <div>
-                {`Welcome ${this.state.userName}`}
-                <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/countries/community/${localStorage.getItem("country_id")}`}>Home</NavLink>
-                {this.state.isAdmin && <NavLink to="/dashboard/countries">Country Display</NavLink>}
-                <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
-                
+                <NavDiv>
+                    <div>
+                    {`Welcome ${this.state.userName}`}
+                    <NavLink to={this.state.isAdmin ? "/dashboard" : `/dashboard/countries/community/${localStorage.getItem("country_id")}`}>Home</NavLink>
+                    {this.state.isAdmin && <NavLink to="/dashboard/countries">List Countries</NavLink>}
+                    <NavLink to="/Home/login" onClick={this.logout}>Log out</NavLink>
+                    </div>
+                </NavDiv>
                 {this.state.isAdmin && <Route exact path ="/dashboard" render ={props => (
+                    <MapDiv>
                     <Map 
                         {...props}
                         countries={this.props.countries}
                     />
+                    </MapDiv>
                 )} />}
+
                 <Route  exact path="/dashboard/countries/" render={props => (
                     <DataView
                         {...props}
@@ -110,6 +116,31 @@ const mapDispatchToProps = {
   
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)
 
+const NavDiv = styled.div`
+    background: #1890ff;
+    color: white
+    font-size: 1.5rem;
+    height: 5vh;
+    
+    
+    div{
+        width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+    }
 
+    a{
+        color: white;
+        text-decoration: none;
+        font-size; 2rem;
 
+        &:hover{
+            text-decoration: underline
+        }
+    }
+`
 
+const MapDiv = styled.div`
+    margin-top: 100px;
+`

@@ -10,12 +10,14 @@ function DataTable(props) {
           dataIndex: 'name',
           key: 'name',
           render: (text,record) => (<Link to={`${props.link}/${record.key}`}>{text}</Link>),
-          width: `80%`
+          width: `50%`,
+          align: 'center',
         },  
         {
           title: 'Manage',
           key: 'manage',
-          width: `20%`,
+          width: `50%`,
+          align: 'center',
           render: (text, record) => (
             <>
                 <Link to="#" onClick={() => props.edit(text, "edit")} style={{paddingRight: "10px"}}>Edit</Link>
@@ -26,7 +28,7 @@ function DataTable(props) {
                     okText="Yes"
                     cancelText="No"
                 >
-                <a href='#'>Delete</a>
+                <a href='#' style={{paddingLeft: "20px"}}>Delete</a>
                 </Popconfirm>
             </>
           ),
@@ -51,7 +53,7 @@ function DataTable(props) {
 
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={true}/>
+            <Table loading={props.gettingData} columns={columns} dataSource={data} pagination={data.length>10}/>
         </div>
     )
 }
