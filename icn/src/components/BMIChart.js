@@ -60,6 +60,7 @@ class BMIChart extends React.Component {
 
         chart.legend = new am4charts.Legend();
         chart.legend.position = "top"
+        chart.legend.fontSize = "20px";
     }
     
     

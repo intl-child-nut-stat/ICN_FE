@@ -36,6 +36,7 @@ class Map extends React.Component {
         // Configure series
         var polygonTemplate = polygonSeries.mapPolygons.template;
         polygonTemplate.tooltipText = "{name}";   
+        polygonTemplate.fontSize = "20px";
         polygonTemplate.events.on("hit", (ev) => {
            this.clickedCountry(ev.target.dataItem.dataContext.name)
         })
