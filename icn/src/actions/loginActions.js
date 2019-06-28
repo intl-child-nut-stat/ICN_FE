@@ -24,7 +24,8 @@ export const attemptLogin = (creds) => dispatch => {
             return true
         })
         .catch(err => {
-            dispatch({type: LOGIN_ERROR, payload: err}) 
+            let error = err.request.response.substring(err.request.response.indexOf(':')+2, err.request.response.length-2)
+            dispatch({type: LOGIN_ERROR, payload: error}) 
         })
 }
 

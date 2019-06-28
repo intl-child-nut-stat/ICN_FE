@@ -31,6 +31,7 @@ class Login extends React.Component {
                 <LoginForm 
                     handleSubmit={this.handleSubmit}
                 />
+                {this.props.error !== '' && <h3>{this.props.error}</h3>}
             </div>
         );
     }
@@ -39,7 +40,7 @@ class Login extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    
+    error: state.login.errorMessage
 })
 
 const mapDispatchToProps = {
