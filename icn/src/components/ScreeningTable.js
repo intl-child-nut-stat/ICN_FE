@@ -79,7 +79,10 @@ function DataTable(props) {
                 weight: item.weight,
                 bmi: Math.round((item.weight/(Math.pow(item.height/100,2)))*100)/100
             }
-    }).sort((a,b) => a.date > b.date ? -1 : 1).map((item,index) => {return{...item, key: ++index}})
+    }).sort((a,b) => {
+        let aDate = new Date(a.datePicker)
+        let bDate = new Date(b.datePicker)
+        return aDate > bDate ? -1 : 1}).map((item,index) => {return{...item, key: ++index}})
     
     return (
         <div>

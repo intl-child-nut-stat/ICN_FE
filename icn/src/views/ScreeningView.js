@@ -40,7 +40,12 @@ class DataView extends Component {
             this.props.updateData(this.props.postUrl || this.props.url, this.state.activeKey, object, this.props.item)
         this.setState({
             visible: false,
-            activeItem: {},
+            activeItem: {
+                height: '',
+                weight: '',
+                age: '',
+                date: '',
+            },
             actionType: '',
             activeKey: ''
         })
@@ -127,9 +132,9 @@ class DataView extends Component {
                         activeItem={this.state.activeItem}
                     />
                 </div>
-                {/* <BMIChart 
+                {this.props[this.props.item].length>1 ? <BMIChart 
                     data={this.props[this.props.item]}
-                /> */}
+                /> : <div>Add more data to get a BMI chart.</div>}
             </div>
         )
     }

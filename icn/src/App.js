@@ -15,6 +15,12 @@ class App extends React.Component{
     componentDidMount() {
         if(!localStorage.getItem("token"))
             this.props.history.push("/home/login")
+        else if(this.props.history.length>1)
+            return
+        else if(localStorage.getItem("isAdmin") === "true")
+            this.props.history.push("/dashboard")
+        else 
+            this.props.history.push(`/dashboard/country/${localStorage.getItem("country_id")}`)
     }
     
     render(){
