@@ -95,8 +95,10 @@ class DataView extends Component {
     }
 
     render() {
+        console.log(this.props.pageClicked, this.props.header)
         return (
             <DataDiv>
+                {this.props.pageClicked && <h2 className="header">{this.props.pageClicked[this.props.header]}</h2>}
                 <DataTable 
                     data={this.props[this.props.item]}
                     confirmDelete = {this.confirmDelete}
@@ -152,7 +154,8 @@ class DataView extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
-    gettingData: state.data.isGetting
+    gettingData: state.data.isGetting,
+    pageClicked: state.data[ownProps.header].length && state.data[ownProps.header].filter(item => item.id === Number(ownProps.match.params.id))[0]
 })
 
 const mapDispatchToProps = {
@@ -171,6 +174,12 @@ const DataDiv = styled.div`
     background: white;
     text-align: center;
 
+    h2{
+        background: #d3d3d3;
+        border-bottom: 2px solid black;
+        padding: 10px;
+        font-size: 25px;
+    }
     button{
         margin: 20px 0;
     }

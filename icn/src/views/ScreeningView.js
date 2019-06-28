@@ -108,6 +108,7 @@ class DataView extends Component {
     render() {
         return (
             <DataDiv>
+                {this.props.pageClicked && <h2 className="header">{this.props.pageClicked.name}</h2>}
                 <ScreeningTable 
                     data={this.props[this.props.item]}
                     confirmDelete = {this.confirmDelete}
@@ -146,7 +147,8 @@ class DataView extends Component {
 const mapStateToProps = (state, ownProps) => ({
     [ownProps.item]: state.data[ownProps.item],
     children: state.data.children,
-    gettingData: state.data.isGetting
+    gettingData: state.data.isGetting,
+    pageClicked: state.data.children.length && state.data.children.filter(child => child.id === Number(ownProps.match.params.id))[0]
 })
 
 const mapDispatchToProps = {
@@ -164,6 +166,13 @@ const DataDiv = styled.div`
     margin: 0 auto;
     background: white;
     text-align: center;
+    
+    h2{
+        background: #d3d3d3;
+        border-bottom: 2px solid black;
+        padding: 10px;
+        font-size: 25px;
+    }
 
     button{
         margin: 20px auto;

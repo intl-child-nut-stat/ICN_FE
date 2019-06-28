@@ -59,6 +59,7 @@ export class Dashboard extends Component {
                         item={`country`}
                         param={false}
                         link={`/dashboard/countries/community`}
+                        header='country'
                     />
                 )} />
                 <Route exact path="/dashboard/countries/community/:id" render={props => (
@@ -71,6 +72,7 @@ export class Dashboard extends Component {
                         filter={'country_id'}
                         param={false}
                         link={`/dashboard/countries/community/children`}
+                        header='country'
                     />
                 )} />
                 <Route exact path="/dashboard/countries/community/children/:id" render={props => (
@@ -84,6 +86,7 @@ export class Dashboard extends Component {
                         filter={`community_id`}
                         param={true}
                         link={`/dashboard/countries/community/children/screening`}
+                        header='community'
                     />
                 )} />
                 <Route exact path="/dashboard/countries/community/children/screening/:id" render={props => (
@@ -95,6 +98,7 @@ export class Dashboard extends Component {
                         item={`screening`}
                         filter={`children_id`}
                         param={true}
+                        header='children'
                     />
                 )} />
             </div>
