@@ -134,6 +134,7 @@ class DataView extends Component {
                 </div>
                 {this.props[this.props.item].length>1 ? <BMIChart 
                     data={this.props[this.props.item]}
+                    childName={this.props.children.filter(child => child.id === Number(this.props.match.params.id))}
                 /> : <div>Add more data to get a BMI chart.</div>}
             </div>
         )

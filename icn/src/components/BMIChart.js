@@ -14,6 +14,7 @@ class BMIChart extends React.Component {
     
 
     displayGraph = () => {
+        
         let chart = am4core.create("chartdiv", am4charts.XYChart);
         let bmi = this.props.data.sort((a,b) => {
             let aDate = new Date(a.date)
@@ -21,7 +22,7 @@ class BMIChart extends React.Component {
             return aDate>bDate?-1 :1
         }).map((screening, index) => {
             let dateToUse = moment.utc(screening.date).format(`MM-DD-YYYY`)
-            return {value: Math.round((screening.weight/(Math.pow(screening.height/100,2)))*100)/100, date:new Date(dateToUse)}
+            return {value: Math.round((screening.weight/(Math.pow(screening.height/100,2)))*100)/100, date:new Date(dateToUse), underweight: 18.5, overweight: 25, obese: 30}
         })
         
         chart.data = bmi;
@@ -39,14 +40,27 @@ class BMIChart extends React.Component {
         let series = chart.series.push(new am4charts.LineSeries());
         series.dataFields.valueY = "value";
         series.dataFields.dateX = "date";
-        series.tooltipText = "{value}"
-        
+        series.fill = am4core.color("#ffffff")
+        series.name = this.props.childName && `${this.props.childName[0].name}'s BMI`
+        series.strokeWidth = 5
+        series.stroke = am4core.color("black")
+        series.tooltipText = "{date}: [bold]{valueY}"
         series.tooltip.pointerOrientation = "vertical";
-        
+
+        let series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.valueY ="underweight";
+        series2.dataFields.dateX = "date"
+        series2.name= "Underweight Standard"
+        series2.strokeWidth = 3
+        series2.stroke = am4core.color("green")
+
         chart.cursor = new am4charts.XYCursor();
         chart.cursor.snapToSeries = series;
         chart.cursor.xAxis = dateAxis;
-        
+
+        chart.scrollbarX = new am4core.Scrollbar();
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "left"
     }
     
     
